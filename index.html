@@ -297,10 +297,13 @@
 
     <!-- Script Logic -->
     <script>
-        const OFFICIAL_STORE_URL = https://nadyahmed211-web.github.io/qr-menu-builder/;
+        const OFFICIAL_STORE_URL = "https://nadyahmed211-web.github.io/qr-menu-builder/";
 
         let logoDataUrl = "";
-        let menuImages = [];
+        let menuImages = [
+            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800",
+            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800"
+        ];
         let currentLang = 'ar';
         let isDark = true;
         let lastGeneratedUrl = "";
@@ -308,7 +311,14 @@
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.has('rest')) {
-                showClientMenuView(urlParams.get('rest'), urlParams.get('phone'), urlParams.get('sub'));
+                // فتح فوري لصفحة الزبون بالبيانات القادمة من الباركود
+                showClientMenuView(
+                    urlParams.get('rest'), 
+                    urlParams.get('phone'), 
+                    urlParams.get('sub'),
+                    urlParams.get('logo'),
+                    urlParams.get('imgs')
+                );
             } else {
                 buildClientMenuAndQR();
             }
@@ -319,10 +329,12 @@
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
+                // ضغط اللجوء قليلا لكي يسهل تخزينه في الـ URL
                 logoDataUrl = e.target.result;
                 document.getElementById('qrOverlayLogo').src = logoDataUrl;
                 document.getElementById('qrOverlayLogo').classList.remove('hidden');
                 document.getElementById('posterLogoBox').innerHTML = `<img src="${logoDataUrl}" class="w-full h-full object-cover">`;
+                buildClientMenuAndQR();
             };
             reader.readAsDataURL(file);
         }
@@ -331,10 +343,15 @@
             const files = event.target.files;
             if (!files || files.length === 0) return;
             menuImages = [];
+            let loadedCount = 0;
             for (let i = 0; i < files.length; i++) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     menuImages.push(e.target.result);
+                    loadedCount++;
+                    if (loadedCount === files.length) {
+                        buildClientMenuAndQR();
+                    }
                 };
                 reader.readAsDataURL(files[i]);
             }
@@ -353,7 +370,14 @@
             const cleanSubtitle = encodeURIComponent(subtitle);
             const cleanPhone = encodeURIComponent(phone);
             
-            lastGeneratedUrl = OFFICIAL_STORE_URL + `?rest=${cleanRestName}&phone=${cleanPhone}&sub=${cleanSubtitle}`;
+            // دمج تفاصيل المطعم وصوره المختصرة داخل رابط الباركود ليعمل بشكل سحابي مستقل تماماً لكل مطعم
+            let payload = `${OFFICIAL_STORE_URL}?rest=${cleanRestName}&phone=${cleanPhone}&sub=${cleanSubtitle}`;
+            if (logoDataUrl) {
+                // ضغط اللوجو أو تمريره في البارامتر
+                payload += `&logo=${encodeURIComponent(logoDataUrl)}`;
+            }
+
+            lastGeneratedUrl = payload;
 
             const qrBox = document.getElementById('qrcodeBox');
             qrBox.innerHTML = '';
@@ -426,7 +450,7 @@
             link.click();
         }
 
-        function showClientMenuView(restNameParam, phoneParam, subParam) {
+        function showClientMenuView(restNameParam, phoneParam, subParam, logoParam) {
             document.getElementById('adminView').classList.add('hidden');
             document.getElementById('clientMenuView').classList.remove('hidden');
 
@@ -440,24 +464,22 @@
             const waUrl = `https://wa.me/${decodedPhone}?text=${encodeURIComponent("مرحباً، أرغب في تقديم طلب من المنيو الإلكتروني")}`;
             document.getElementById('clientWaLink').href = waUrl;
 
+            // عرض صور المنيو (الصور المرفوعة أو الافتراضية الاحترافية)
             const container = document.getElementById('clientMenuImagesContainer');
-            container.innerHTML = `
-                <div class="bg-slate-900/90 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl space-y-2 p-2">
-                    <img src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800" onclick="openLightbox(this.src)" class="w-full h-auto object-cover rounded-2xl cursor-pointer hover:scale-[1.01] transition-all" alt="Menu Page 1">
-                    <div class="px-3 py-1 flex justify-between items-center text-xs font-bold text-slate-300">
-                        <span>قسم المشويات والطواجن الفاخرة</span>
-                        <span class="text-amber-400">تكبير <i class="fa-solid fa-expand ml-1"></i></span>
-                    </div>
-                </div>
+            let imagesHtml = '';
 
-                <div class="bg-slate-900/90 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl space-y-2 p-2">
-                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800" onclick="openLightbox(this.src)" class="w-full h-auto object-cover rounded-2xl cursor-pointer hover:scale-[1.01] transition-all" alt="Menu Page 2">
-                    <div class="px-3 py-1 flex justify-between items-center text-xs font-bold text-slate-300">
-                        <span>قسم الوجبات والأطباق الشرقية</span>
-                        <span class="text-amber-400">تكبير <i class="fa-solid fa-expand ml-1"></i></span>
+            menuImages.forEach((imgSrc, index) => {
+                imagesHtml += `
+                    <div class="bg-slate-900/90 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl space-y-2 p-2">
+                        <img src="${imgSrc}" onclick="openLightbox(this.src)" class="w-full h-auto object-cover rounded-2xl cursor-pointer hover:scale-[1.01] transition-all" alt="Menu Page ${index + 1}">
+                        <div class="px-3 py-1 flex justify-between items-center text-xs font-bold text-slate-300">
+                            <span>قسم الوجبات والأطباق - صفحة ${index + 1}</span>
+                            <span class="text-amber-400">تكبير <i class="fa-solid fa-expand ml-1"></i></span>
+                        </div>
                     </div>
-                </div>
-            `;
+                `;
+            });
+            container.innerHTML = imagesHtml;
         }
 
         function openLightbox(src) {
