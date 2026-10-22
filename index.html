@@ -1,345 +1,398 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="htmlTag">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة صانع المنيو والبوستر السينمائي | Ahmed Abu Omar</title>
-​<!-- Fonts & FontAwesome -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-​<!-- QRCode.js Library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-​<!-- Tailwind CSS CDN -->
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-tailwind.config = {
-darkMode: 'class',
-theme: {
-extend: {
-colors: {
-gold: { 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
-darkBg: '#090d16',
-cardBg: '#0f172a'
-},
-fontFamily: { cairo: ['Cairo', 'sans-serif'] }
-}
-}
-}
-</script>
-​<style>
-body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
-.custom-scrollbar::-webkit-scrollbar { width: 5px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: #eab308; border-radius: 4px; }
-​@media print {
-@page { size: A4 portrait; margin: 0; }
-body { background: #090d16 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-body * { visibility: hidden; }
-#posterPrintArea, #posterPrintArea * { visibility: visible; }
-#posterPrintArea {
-position: absolute; left: 0; top: 0; width: 210mm; height: 297mm;
-padding: 12mm; margin: 0; box-shadow: none !important; border: none !important;
-background: linear-gradient(135deg, #090d16 0%, #1e1b2e 50%, #090d16 100%) !important;
-}
-.no-print { display: none !important; }
-}
-​.gold-border-glow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.25); }
-.gold-gradient-text {
-background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-}
-#qrcodeBox img, #qrcodeBox canvas {
-display: block !important;
-margin: 0 auto !important;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة صانع المنيو والبوستر السينمائي | Ahmed Abu Omar</title>
+
+    <!-- Fonts & FontAwesome -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- QRCode.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: { 400: '#facc15', 500: '#eab308', 600: '#ca8a04', 700: '#a16207' },
+                        darkBg: '#090d16',
+                        cardBg: '#0f172a'
+                    },
+                    fontFamily: { cairo: ['Cairo', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #eab308; border-radius: 4px; }
+
+        @media print {
+            @page { size: A4 portrait; margin: 0; }
+            body { background: #090d16 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            body * { visibility: hidden; }
+            #posterPrintArea, #posterPrintArea * { visibility: visible; }
+            #posterPrintArea {
+                position: absolute; left: 0; top: 0; width: 210mm; height: 297mm;
+                padding: 12mm; margin: 0; box-shadow: none !important; border: none !important;
+                background: linear-gradient(135deg, #090d16 0%, #1e1b2e 50%, #090d16 100%) !important;
+            }
+            .no-print { display: none !important; }
+        }
+
+        .gold-border-glow { box-shadow: 0 0 25px rgba(234, 179, 8, 0.25); }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #fef08a 0%, #eab308 50%, #ca8a04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
 </head>
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between select-none custom-scrollbar" id="mainBody">
-​<!-- VIEW 1: CLIENT MENU DISPLAY (يظهر للزبون عند مسح الباركود) -->
-<div id="clientMenuView" class="hidden min-h-screen flex flex-col justify-between">
-<header class="bg-slate-900/90 border-b border-amber-500/20 sticky top-0 z-50 backdrop-blur-xl">
-<div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
-<button onclick="toggleLanguage()" class="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold flex items-center gap-1.5">
-<i class="fa-solid fa-globe"></i>
-<span id="langBtnText">English</span>
-</button>
-<div class="text-center">
-<h1 id="clientHeaderTitle" class="text-base font-black text-white gold-gradient-text leading-tight">اسم المطعم</h1>
-<p id="clientHeaderSubtitle" class="text-[10px] text-amber-400 font-semibold">أهلاً بكم في مطعمكم</p>
-</div>
-<button onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center text-sm">
-<i id="themeIcon" class="fa-solid fa-sun"></i>
-</button>
-</div>
-</header>
-​<main class="max-w-md mx-auto px-4 py-6 w-full flex-1 space-y-6">
-<div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mx-auto w-full justify-center">
-<i class="fa-solid fa-utensils"></i>
-<span id="menuSectionBadge">قائمة المأكولات والمشروبات المتاحة</span>
-</div>
-​<div id="clientMenuImagesContainer" class="space-y-5">
-<!-- Dynamic Menu Images -->
-</div>
-​<div class="bg-gradient-to-b from-slate-900/90 to-slate-950 border border-amber-500/30 rounded-3xl p-6 text-center space-y-3 shadow-2xl mt-8">
-<div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto text-xl">
-<i class="fa-solid fa-heart"></i>
-</div>
-<p id="farewellText" class="text-sm font-black text-amber-400">تشرفنا بزيارتكم الكريمة ونرجو تكرار هذه الزيارة ❤️</p>
-<p class="text-[10px] text-slate-500">تصميم وتطوير: أحمد أبو عمر (Ahmed Abu Omar)</p>
-</div>
-</main>
-​<footer class="bg-slate-900/95 border-t border-amber-500/20 p-3 sticky bottom-0 z-40">
-<div class="max-w-md mx-auto">
-<a id="clientWaLink" href="#" target="_blank" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xl">
-<i class="fa-brands fa-whatsapp text-xl"></i>
-<span id="waBtnText">اضغط هنا لإرسال طلبك عبر الواتساب</span>
-</a>
-</div>
-</footer>
-</div>
-​<!-- VIEW 2: ADMIN BUILDER (لوحة التحكم) -->
-<div id="adminView" class="w-full min-h-screen flex flex-col justify-between">
-<header class="bg-slate-900 border-b border-amber-500/20 sticky top-0 z-50 no-print">
-<div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-<div class="flex items-center gap-3">
-<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xl">
-<i class="fa-solid fa-wand-magic-sparkles"></i>
-</div>
-<div>
-<h1 class="text-sm font-black text-white">استوديو صانع المنيو والبوستر السينمائي</h1>
-<span class="text-[10px] text-amber-400 font-bold">تطوير: أحمد أبو عمر (Ahmed Abu Omar)</span>
-</div>
-</div>
-<div class="flex items-center gap-2">
-<button onclick="downloadHDQrImage()" class="px-3.5 py-2 bg-emerald-600 text-white font-black text-xs rounded-xl shadow-lg flex items-center gap-1.5">
-<i class="fa-solid fa-download"></i> تنزيل الباركود HD
-</button>
-<button onclick="window.print()" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs rounded-xl shadow-lg flex items-center gap-1.5">
-<i class="fa-solid fa-print"></i> طباعة بوستر A4
-</button>
-</div>
-</div>
-</header>
-​<main class="max-w-6xl mx-auto px-4 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
-<section class="lg:col-span-5 space-y-5 no-print">
-<div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/20 shadow-2xl space-y-4">
-<h3 class="text-xs font-black text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-2">
-<i class="fa-solid fa-pen-to-square"></i> بيانات المطعم والبوستر
-</h3>
-<div class="space-y-3 text-xs">
-<div>
-<label class="block text-slate-400 mb-1 font-semibold">اسم المطعم بالعربي</label>
-<input type="text" id="adminRestName" value="مطعم وكافيه أحمد أبو عمر" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white font-bold">
-</div>
-<div>
-<label class="block text-slate-400 mb-1 font-semibold">جملة الترحيب</label>
-<input type="text" id="adminRestSubtitle" value="أهلاً بكم في مطعمكم - أشهى الوجبات الشرقية" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white">
-</div>
-<div>
-<label class="block text-slate-400 mb-1 font-semibold">رقم واتساب المطعم</label>
-<input type="text" id="adminRestPhone" value="01206443652" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-amber-400 font-mono font-bold" dir="ltr">
-</div>
-<div class="grid grid-cols-2 gap-3 pt-2">
-<button onclick="document.getElementById('fileMenuImages').click()" class="py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 font-bold flex items-center justify-center gap-1.5">
-<i class="fa-solid fa-images text-amber-400"></i> صور المنيو
-</button>
-<input type="file" id="fileMenuImages" accept="image/*" multiple class="hidden" onchange="handleMenuFiles(event)">
-<button onclick="document.getElementById('fileLogo').click()" class="py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 font-bold flex items-center justify-center gap-1.5">
-<i class="fa-solid fa-image text-amber-400"></i> لوجو المطعم
-</button>
-<input type="file" id="fileLogo" accept="image/*" class="hidden" onchange="handleLogoFile(event)">
-</div>
-</div>
-</div>
-</section>
-​<section class="lg:col-span-7 flex flex-col items-center">
-<div class="w-full bg-slate-900 p-3 rounded-2xl border border-amber-500/20 mb-3 flex items-center justify-between no-print">
-<span class="text-xs font-bold text-slate-300"><i class="fa-solid fa-sparkles text-amber-400 ml-1"></i> معاينة بوستر A4 السينمائي</span>
-</div>
-​<div id="posterPrintArea" class="w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 rounded-3xl p-8 shadow-2xl border-2 border-amber-500/30 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden min-h-[620px] gold-border-glow">
-<div class="w-full h-2 bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 rounded-full mb-1"></div>
-<div class="space-y-2 w-full relative z-10">
-<div id="posterLogoBox" class="w-20 h-20 rounded-2xl bg-slate-900 text-amber-400 flex items-center justify-center mx-auto text-3xl border-2 border-amber-500/50 overflow-hidden">
-<i class="fa-solid fa-utensils"></i>
-</div>
-<h1 id="posterRestName" class="text-3xl font-black text-white gold-gradient-text tracking-tight">مطعم وكافيه أحمد أبو عمر</h1>
-<p id="posterRestSubtitle" class="text-xs font-bold text-slate-300">أهلاً بكم في مطعمكم - أشهى الوجبات الشرقية</p>
-</div>
-​<div class="px-6 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black shadow-lg">
-<i class="fa-solid fa-qrcode ml-1.5 text-sm"></i> امسح الباركود بكاميرا الموبايل لتصفح المنيو فوراً
-</div>
-​<!-- Ultra-Clear QR Code Area -->
-<div class="p-4 bg-white rounded-3xl border-4 border-amber-400 shadow-2xl relative flex items-center justify-center min-w-[240px] min-h-[240px]">
-<div id="qrcodeBox" class="flex items-center justify-center"></div>
-<img id="qrOverlayLogo" class="absolute w-12 h-12 rounded-xl bg-white p-1 border-2 border-slate-900 shadow-xl hidden z-20 pointer-events-none" src="" alt="logo">
-</div>
-​<div class="space-y-3 w-full border-t border-amber-500/20 pt-4">
-<p class="text-xs font-black text-amber-400">تشرفنا بزيارتكم الكريمة ونرجو تكرار هذه الزيارة ❤️</p>
-<div class="text-xs font-extrabold text-emerald-400 bg-slate-900/90 py-2.5 px-6 rounded-2xl border border-emerald-500/30 inline-block">
-<i class="fa-brands fa-whatsapp text-sm ml-1"></i> للطلب المباشر: <span id="posterPhoneDisplay" class="font-mono" dir="ltr">01206443652</span>
-</div>
-</div>
-</div>
-</section>
-</main>
-<canvas id="hdCanvas" class="hidden"></canvas>
-</div>
-​<!-- Lightbox -->
-<div id="lightboxModal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center hidden p-4" onclick="closeLightbox()">
-<img id="lightboxImg" class="max-w-full max-h-full rounded-2xl object-contain border border-amber-500/30" src="" alt="Zoom">
-</div>
-​<script>
-const TEST_STORE_URL = "https://nadyahmed211-web.github.io/qr-menu-builder/";
-​let logoDataUrl = "";
-let menuImages = [
-"https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800",
-"https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800"
-];
-let currentLang = 'ar';
-let isDark = true;
-let lastGeneratedUrl = "";
-​window.addEventListener('DOMContentLoaded', () => {
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.has('view') && urlParams.get('view') === 'client') {
-showClientMenuView();
-} else {
-buildClientMenuAndQR();
-}
-});
-​function handleLogoFile(event) {
-const file = event.target.files[0];
-if (!file) return;
-const reader = new FileReader();
-reader.onload = function(e) {
-logoDataUrl = e.target.result;
-document.getElementById('qrOverlayLogo').src = logoDataUrl;
-document.getElementById('qrOverlayLogo').classList.remove('hidden');
-document.getElementById('posterLogoBox').innerHTML = <img src="${logoDataUrl}" class="w-full h-full object-cover">;
-buildClientMenuAndQR();
-};
-reader.readAsDataURL(file);
-}
-​function handleMenuFiles(event) {
-const files = event.target.files;
-if (!files || files.length === 0) return;
-menuImages = [];
-let loaded = 0;
-for (let i = 0; i < files.length; i++) {
-const reader = new FileReader();
-reader.onload = function(e) {
-menuImages.push(e.target.result);
-loaded++;
-if (loaded === files.length) buildClientMenuAndQR();
-};
-reader.readAsDataURL(files[i]);
-}
-}
-​function buildClientMenuAndQR() {
-const name = document.getElementById('adminRestName').value || 'اسم المطعم';
-const subtitle = document.getElementById('adminRestSubtitle').value || 'أهلاً بكم';
-const phone = document.getElementById('adminRestPhone').value || '01206443652';
-​document.getElementById('posterRestName').innerText = name;
-document.getElementById('posterRestSubtitle').innerText = subtitle;
-document.getElementById('posterPhoneDisplay').innerText = phone;
-​lastGeneratedUrl = TEST_STORE_URL;
-​const qrBox = document.getElementById('qrcodeBox');
-qrBox.innerHTML = '';
-​new QRCode(qrBox, {
-text: lastGeneratedUrl,
-width: 200,
-height: 200,
-colorDark: "#000000",
-colorLight: "#ffffff",
-correctLevel: QRCode.CorrectLevel.H
-});
-}
-​function downloadHDQrImage() {
-if (!lastGeneratedUrl) buildClientMenuAndQR();
-const canvas = document.getElementById('hdCanvas');
-const ctx = canvas.getContext('2d');
-const size = 1200;
-canvas.width = size;
-canvas.height = size;
-​const tempDiv = document.createElement('div');
-new QRCode(tempDiv, { text: lastGeneratedUrl, width: size, height: size, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
-​setTimeout(() => {
-const qrImg = tempDiv.querySelector('img');
-if (!qrImg) return;
-ctx.fillStyle = "#ffffff";
-ctx.fillRect(0, 0, size, size);
-ctx.drawImage(qrImg, 0, 0, size, size);
-​if (logoDataUrl) {
-const logoImg = new Image();
-logoImg.onload = function() {
-const logoSize = size * 0.22;
-const logoPos = (size - logoSize) / 2;
-ctx.fillStyle = "#ffffff";
-ctx.beginPath();
-ctx.roundRect(logoPos - 12, logoPos - 12, logoSize + 24, logoSize + 24, 24);
-ctx.fill();
-ctx.lineWidth = 5;
-ctx.strokeStyle = "#000000";
-ctx.stroke();
-ctx.drawImage(logoImg, logoPos, logoPos, logoSize, logoSize);
-saveCanvasImage(canvas);
-};
-logoImg.src = logoDataUrl;
-} else {
-saveCanvasImage(canvas);
-}
-}, 300);
-}
-​function saveCanvasImage(canvas) {
-const link = document.createElement('a');
-link.download = QR-Code-HD-Test.png;
-link.href = canvas.toDataURL('image/png', 1.0);
-link.click();
-}
-​function showClientMenuView() {
-document.getElementById('adminView').classList.add('hidden');
-document.getElementById('clientMenuView').classList.remove('hidden');
-​const name = document.getElementById('adminRestName').value || 'مطعم وكافيه أحمد أبو عمر';
-const subtitle = document.getElementById('adminRestSubtitle').value || 'أهلاً بكم في مطعمكم';
-const phone = document.getElementById('adminRestPhone').value || '01206443652';
-​document.getElementById('clientHeaderTitle').innerText = name;
-document.getElementById('clientHeaderSubtitle').innerText = subtitle;
-​const waUrl = https://wa.me/${phone}?text=${encodeURIComponent("مرحباً، أرغب في تقديم طلب من المنيو الإلكتروني")};
-document.getElementById('clientWaLink').href = waUrl;
-​const container = document.getElementById('clientMenuImagesContainer');
-let html = '';
-menuImages.forEach((src, idx) => {
-html += <div class="bg-slate-900/90 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl space-y-2 p-2"> <img src="${src}" onclick="openLightbox(this.src)" class="w-full h-auto object-cover rounded-2xl cursor-pointer" alt="Menu ${idx+1}"> <div class="px-3 py-1 flex justify-between items-center text-xs font-bold text-slate-300"> <span>قائمة الطعام - صفحة ${idx+1}</span> <span class="text-amber-400">تكبير <i class="fa-solid fa-expand ml-1"></i></span> </div> </div>;
-});
-container.innerHTML = html;
-}
-​function openLightbox(src) {
-document.getElementById('lightboxImg').src = src;
-document.getElementById('lightboxModal').classList.remove('hidden');
-}
-​function closeLightbox() {
-document.getElementById('lightboxModal').classList.add('hidden');
-}
-​function toggleLanguage() {
-currentLang = currentLang === 'ar' ? 'en' : 'ar';
-document.getElementById('htmlTag').setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
-document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'English' : 'عربي';
-document.getElementById('waBtnText').innerText = currentLang === 'ar' ? 'اضغط هنا لإرسال طلبك عبر الواتساب' : 'Click Here to Send Your Order via WhatsApp';
-}
-​function toggleTheme() {
-isDark = !isDark;
-const body = document.getElementById('mainBody');
-const icon = document.getElementById('themeIcon');
-if (isDark) {
-body.className = "bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between select-none custom-scrollbar";
-icon.className = "fa-solid fa-sun";
-} else {
-body.className = "bg-slate-100 text-slate-900 min-h-screen flex flex-col justify-between select-none custom-scrollbar";
-icon.className = "fa-solid fa-moon";
-}
-}
-</script>
+
+    <!-- VIEW 1: CLIENT MENU DISPLAY (يظهر للزبون عند مسح الباركود) -->
+    <div id="clientMenuView" class="hidden min-h-screen flex flex-col justify-between">
+        <header class="bg-slate-900/90 border-b border-amber-500/20 sticky top-0 z-50 backdrop-blur-xl">
+            <div class="max-w-md mx-auto px-4 py-3 flex justify-between items-center">
+                <button onclick="toggleLanguage()" class="px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold flex items-center gap-1.5">
+                    <i class="fa-solid fa-globe"></i>
+                    <span id="langBtnText">English</span>
+                </button>
+                <div class="text-center">
+                    <h1 id="clientHeaderTitle" class="text-base font-black text-white gold-gradient-text leading-tight">اسم المطعم</h1>
+                    <p id="clientHeaderSubtitle" class="text-[10px] text-amber-400 font-semibold">أهلاً بكم في مطعمكم</p>
+                </div>
+                <button onclick="toggleTheme()" class="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 text-amber-400 flex items-center justify-center text-sm">
+                    <i id="themeIcon" class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="max-w-md mx-auto px-4 py-6 w-full flex-1 space-y-6">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mx-auto w-full justify-center">
+                <i class="fa-solid fa-utensils"></i>
+                <span id="menuSectionBadge">قائمة المأكولات والمشروبات المتاحة</span>
+            </div>
+
+            <div id="clientMenuImagesContainer" class="space-y-5">
+                <!-- Dynamic Menu Images -->
+            </div>
+
+            <div class="bg-gradient-to-b from-slate-900/90 to-slate-950 border border-amber-500/30 rounded-3xl p-6 text-center space-y-3 shadow-2xl mt-8">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-heart"></i>
+                </div>
+                <p id="farewellText" class="text-sm font-black text-amber-400">تشرفنا بزيارتكم الكريمة ونرجو تكرار هذه الزيارة ❤️</p>
+                <p class="text-[10px] text-slate-500">تصميم وتطوير: أحمد أبو عمر (Ahmed Abu Omar)</p>
+            </div>
+        </main>
+
+        <footer class="bg-slate-900/95 border-t border-amber-500/20 p-3 sticky bottom-0 z-40">
+            <div class="max-w-md mx-auto">
+                <a id="clientWaLink" href="#" target="_blank" class="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-emerald-500 text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 shadow-xl">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span id="waBtnText">اضغط هنا لإرسال طلبك عبر الواتساب</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- VIEW 2: ADMIN BUILDER (لوحة التحكم) -->
+    <div id="adminView" class="w-full min-h-screen flex flex-col justify-between">
+        <header class="bg-slate-900 border-b border-amber-500/20 sticky top-0 z-50 no-print">
+            <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 flex items-center justify-center text-slate-950 font-black text-xl">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-sm font-black text-white">استوديو صانع المنيو والبوستر السينمائي</h1>
+                        <span class="text-[10px] text-amber-400 font-bold">تطوير: أحمد أبو عمر (Ahmed Abu Omar)</span>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="downloadHDQrImage()" class="px-3.5 py-2 bg-emerald-600 text-white font-black text-xs rounded-xl shadow-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> تنزيل الباركود HD
+                    </button>
+                    <button onclick="window.print()" class="px-3.5 py-2 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-black text-xs rounded-xl shadow-lg flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> طباعة بوستر A4
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="max-w-6xl mx-auto px-4 py-6 w-full flex-1 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <section class="lg:col-span-5 space-y-5 no-print">
+                <div class="bg-slate-900/90 p-5 rounded-2xl border border-amber-500/20 shadow-2xl space-y-4">
+                    <h3 class="text-xs font-black text-amber-400 flex items-center gap-2 border-b border-slate-800 pb-2">
+                        <i class="fa-solid fa-pen-to-square"></i> بيانات المطعم والبوستر
+                    </h3>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">اسم المطعم بالعربي</label>
+                            <input type="text" id="adminRestName" value="مطعم وكافيه أحمد أبو عمر" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">جملة الترحيب</label>
+                            <input type="text" id="adminRestSubtitle" value="أهلاً بكم في مطعمكم - أشهى الوجبات الشرقية" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-white">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1 font-semibold">رقم واتساب المطعم</label>
+                            <input type="text" id="adminRestPhone" value="01206443652" oninput="buildClientMenuAndQR()" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2.5 text-amber-400 font-mono font-bold" dir="ltr">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3 pt-2">
+                            <button onclick="document.getElementById('fileMenuImages').click()" class="py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 font-bold flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-images text-amber-400"></i> صور المنيو
+                            </button>
+                            <input type="file" id="fileMenuImages" accept="image/*" multiple class="hidden" onchange="handleMenuFiles(event)">
+                            <button onclick="document.getElementById('fileLogo').click()" class="py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-slate-300 font-bold flex items-center justify-center gap-1.5">
+                                <i class="fa-solid fa-image text-amber-400"></i> لوجو المطعم
+                            </button>
+                            <input type="file" id="fileLogo" accept="image/*" class="hidden" onchange="handleLogoFile(event)">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="lg:col-span-7 flex flex-col items-center">
+                <div class="w-full bg-slate-900 p-3 rounded-2xl border border-amber-500/20 mb-3 flex items-center justify-between no-print">
+                    <span class="text-xs font-bold text-slate-300"><i class="fa-solid fa-sparkles text-amber-400 ml-1"></i> معاينة بوستر A4 السينمائي</span>
+                </div>
+
+                <div id="posterPrintArea" class="w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 rounded-3xl p-8 shadow-2xl border-2 border-amber-500/30 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden min-h-[620px] gold-border-glow">
+                    <div class="w-full h-2 bg-gradient-to-r from-amber-500 via-amber-300 to-amber-500 rounded-full mb-1"></div>
+                    <div class="space-y-2 w-full relative z-10">
+                        <div id="posterLogoBox" class="w-20 h-20 rounded-2xl bg-slate-900 text-amber-400 flex items-center justify-center mx-auto text-3xl border-2 border-amber-500/50 overflow-hidden">
+                            <i class="fa-solid fa-utensils"></i>
+                        </div>
+                        <h1 id="posterRestName" class="text-3xl font-black text-white gold-gradient-text tracking-tight">مطعم وكافيه أحمد أبو عمر</h1>
+                        <p id="posterRestSubtitle" class="text-xs font-bold text-slate-300">أهلاً بكم في مطعمكم - أشهى الوجبات الشرقية</p>
+                    </div>
+
+                    <div class="px-6 py-2 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black shadow-lg">
+                        <i class="fa-solid fa-qrcode ml-1.5 text-sm"></i> امسح الباركود بكاميرا الموبايل لتصفح المنيو فوراً
+                    </div>
+
+                    <!-- حاوية الباركود مع ضبط الحجم واللوجو -->
+                    <div class="p-4 bg-white rounded-3xl border-4 border-amber-400 shadow-2xl relative flex items-center justify-center min-w-[230px] min-h-[230px]">
+                        <div id="qrcodeBox" class="flex items-center justify-center"></div>
+                        <img id="qrOverlayLogo" class="absolute w-11 h-11 rounded-xl bg-white p-1 border-2 border-slate-900 shadow-md hidden z-20 pointer-events-none" src="" alt="logo">
+                    </div>
+
+                    <div class="space-y-3 w-full border-t border-amber-500/20 pt-4">
+                        <p class="text-xs font-black text-amber-400">تشرفنا بزيارتكم الكريمة ونرجو تكرار هذه الزيارة ❤️</p>
+                        <div class="text-xs font-extrabold text-emerald-400 bg-slate-900/90 py-2.5 px-6 rounded-2xl border border-emerald-500/30 inline-block">
+                            <i class="fa-brands fa-whatsapp text-sm ml-1"></i> للطلب المباشر: <span id="posterPhoneDisplay" class="font-mono" dir="ltr">01206443652</span>
+                        </div>
+                    </div>
+
+                    <div class="text-[10px] text-slate-400 font-bold pt-2 border-t border-slate-800 w-full relative z-10">
+                        جميع الحقوق محفوظة © أحمد أبو عمر - Ahmed Abu Omar | 01206443652
+                    </div>
+                </div>
+            </section>
+        </main>
+        <canvas id="hdCanvas" class="hidden"></canvas>
+    </div>
+
+    <!-- Lightbox Modal -->
+    <div id="lightboxModal" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center hidden p-4" onclick="closeLightbox()">
+        <img id="lightboxImg" class="max-w-full max-h-full rounded-2xl object-contain border border-amber-500/30" src="" alt="Zoom">
+    </div>
+
+    <script>
+        // رابط موقعك المباشر المستقر
+        const TARGET_STORE_URL = "https://nadyahmed211-web.github.io/qr-menu-builder/";
+
+        let logoDataUrl = "";
+        let menuImages = [
+            "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800",
+            "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800"
+        ];
+        let currentLang = 'ar';
+        let isDark = true;
+        let lastGeneratedUrl = "";
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('view') && urlParams.get('view') === 'client') {
+                showClientMenuView();
+            } else {
+                buildClientMenuAndQR();
+            }
+        });
+
+        function handleLogoFile(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                logoDataUrl = e.target.result;
+                document.getElementById('qrOverlayLogo').src = logoDataUrl;
+                document.getElementById('qrOverlayLogo').classList.remove('hidden');
+                document.getElementById('posterLogoBox').innerHTML = `<img src="${logoDataUrl}" class="w-full h-full object-cover">`;
+                buildClientMenuAndQR();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleMenuFiles(event) {
+            const files = event.target.files;
+            if (!files || files.length === 0) return;
+            menuImages = [];
+            let loaded = 0;
+            for (let i = 0; i < files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    menuImages.push(e.target.result);
+                    loaded++;
+                    if (loaded === files.length) buildClientMenuAndQR();
+                };
+                reader.readAsDataURL(files[i]);
+            }
+        }
+
+        function buildClientMenuAndQR() {
+            const name = document.getElementById('adminRestName').value || 'اسم المطعم';
+            const subtitle = document.getElementById('adminRestSubtitle').value || 'أهلاً بكم';
+            const phone = document.getElementById('adminRestPhone').value || '01206443652';
+
+            document.getElementById('posterRestName').innerText = name;
+            document.getElementById('posterRestSubtitle').innerText = subtitle;
+            document.getElementById('posterPhoneDisplay').innerText = phone;
+
+            // توليد الباركود لرابط الموقع التجريبي
+            lastGeneratedUrl = TARGET_STORE_URL + "?view=client";
+
+            const qrBox = document.getElementById('qrcodeBox');
+            qrBox.innerHTML = '';
+            
+            new QRCode(qrBox, {
+                text: lastGeneratedUrl,
+                width: 200,
+                height: 200,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function downloadHDQrImage() {
+            if (!lastGeneratedUrl) buildClientMenuAndQR();
+            const canvas = document.getElementById('hdCanvas');
+            const ctx = canvas.getContext('2d');
+            const size = 1200;
+            canvas.width = size;
+            canvas.height = size;
+
+            const tempDiv = document.createElement('div');
+            new QRCode(tempDiv, { text: lastGeneratedUrl, width: size, height: size, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.H });
+
+            setTimeout(() => {
+                const qrImg = tempDiv.querySelector('img');
+                if (!qrImg) return;
+                ctx.fillStyle = "#ffffff";
+                ctx.fillRect(0, 0, size, size);
+                ctx.drawImage(qrImg, 0, 0, size, size);
+
+                if (logoDataUrl) {
+                    const logoImg = new Image();
+                    logoImg.onload = function() {
+                        const logoSize = size * 0.18;
+                        const logoPos = (size - logoSize) / 2;
+                        ctx.fillStyle = "#ffffff";
+                        ctx.beginPath();
+                        ctx.roundRect(logoPos - 10, logoPos - 10, logoSize + 20, logoSize + 20, 20);
+                        ctx.fill();
+                        ctx.lineWidth = 4;
+                        ctx.strokeStyle = "#000000";
+                        ctx.stroke();
+                        ctx.drawImage(logoImg, logoPos, logoPos, logoSize, logoSize);
+                        saveCanvasImage(canvas);
+                    };
+                    logoImg.src = logoDataUrl;
+                } else {
+                    saveCanvasImage(canvas);
+                }
+            }, 300);
+        }
+
+        function saveCanvasImage(canvas) {
+            const link = document.createElement('a');
+            link.download = `QR-Code-HD-AhmedAbuOmar.png`;
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        }
+
+        function showClientMenuView() {
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('clientMenuView').classList.remove('hidden');
+
+            const name = document.getElementById('adminRestName').value || 'مطعم وكافيه أحمد أبو عمر';
+            const subtitle = document.getElementById('adminRestSubtitle').value || 'أهلاً بكم في مطعمكم';
+            const phone = document.getElementById('adminRestPhone').value || '01206443652';
+
+            document.getElementById('clientHeaderTitle').innerText = name;
+            document.getElementById('clientHeaderSubtitle').innerText = subtitle;
+
+            const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent("مرحباً، أرغب في تقديم طلب من المنيو الإلكتروني")}`;
+            document.getElementById('clientWaLink').href = waUrl;
+
+            const container = document.getElementById('clientMenuImagesContainer');
+            let html = '';
+            menuImages.forEach((src, idx) => {
+                html += `
+                    <div class="bg-slate-900/90 border border-amber-500/30 rounded-3xl overflow-hidden shadow-2xl space-y-2 p-2">
+                        <img src="${src}" onclick="openLightbox(this.src)" class="w-full h-auto object-cover rounded-2xl cursor-pointer" alt="Menu ${idx+1}">
+                        <div class="px-3 py-1 flex justify-between items-center text-xs font-bold text-slate-300">
+                            <span>قائمة الطعام - صفحة ${idx+1}</span>
+                            <span class="text-amber-400">تكبير <i class="fa-solid fa-expand ml-1"></i></span>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightboxModal').classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightboxModal').classList.add('hidden');
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.getElementById('htmlTag').setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langBtnText').innerText = currentLang === 'ar' ? 'English' : 'عربي';
+            document.getElementById('waBtnText').innerText = currentLang === 'ar' ? 'اضغط هنا لإرسال طلبك عبر الواتساب' : 'Click Here to Send Your Order via WhatsApp';
+        }
+
+        function toggleTheme() {
+            isDark = !isDark;
+            const body = document.getElementById('mainBody');
+            const icon = document.getElementById('themeIcon');
+            if (isDark) {
+                body.className = "bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between select-none custom-scrollbar";
+                icon.className = "fa-solid fa-sun";
+            } else {
+                body.className = "bg-slate-100 text-slate-900 min-h-screen flex flex-col justify-between select-none custom-scrollbar";
+                icon.className = "fa-solid fa-moon";
+            }
+        }
+    </script>
 </body>
 </html>
