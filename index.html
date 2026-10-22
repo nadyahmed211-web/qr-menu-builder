@@ -43,7 +43,6 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #eab308; border-radius: 4px; }
 
-        /* A4 Cinematic Print Setup */
         @media print {
             @page { size: A4 portrait; margin: 0; }
             body { background: #090d16 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
@@ -70,7 +69,7 @@
 <body class="bg-darkBg text-slate-100 min-h-screen flex flex-col justify-between select-none custom-scrollbar" id="mainBody">
 
     <!-- ========================================== -->
-    <!-- VIEW 1: CLIENT MENU DISPLAY (يظهر بعد السكان للزبون) -->
+    <!-- VIEW 1: CLIENT MENU DISPLAY (يظهر للزبون بعد مسح الباركود) -->
     <!-- ========================================== -->
     <div id="clientMenuView" class="hidden min-h-screen flex flex-col justify-between">
         
@@ -83,7 +82,7 @@
                 </button>
 
                 <div class="text-center">
-                    <h1 id="clientHeaderTitle" class="text-base font-black text-white gold-gradient-text leading-tight">مطعم وكافيه أحمد أبو عمر</h1>
+                    <h1 id="clientHeaderTitle" class="text-base font-black text-white gold-gradient-text leading-tight">اسم المطعم</h1>
                     <p id="clientHeaderSubtitle" class="text-[10px] text-amber-400 font-semibold">أهلاً بكم في مطعمكم</p>
                 </div>
 
@@ -96,7 +95,6 @@
         <!-- Main Content Gallery -->
         <main class="max-w-md mx-auto px-4 py-6 w-full flex-1 space-y-6">
             
-            <!-- Category Badge -->
             <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold mx-auto w-full justify-center shadow-lg">
                 <i class="fa-solid fa-utensils"></i>
                 <span id="menuSectionBadge">قائمة المأكولات والمشروبات المتاحة</span>
@@ -237,7 +235,6 @@
                 <!-- Printable Poster Cinematic Area -->
                 <div id="posterPrintArea" class="w-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 rounded-3xl p-8 shadow-2xl border-2 border-amber-500/30 flex flex-col justify-between items-center text-center space-y-6 relative overflow-hidden min-h-[620px] gold-border-glow">
                     
-                    <!-- Decorative Background Glows -->
                     <div class="absolute -top-12 -left-12 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -300,6 +297,8 @@
 
     <!-- Script Logic -->
     <script>
+        const OFFICIAL_STORE_URL = https://nadyahmed211-web.github.io/qr-menu-builder/;
+
         let logoDataUrl = "";
         let menuImages = [];
         let currentLang = 'ar';
@@ -350,12 +349,11 @@
             document.getElementById('posterRestSubtitle').innerText = subtitle;
             document.getElementById('posterPhoneDisplay').innerText = phone;
 
-            const baseUrl = window.location.origin + window.location.pathname;
             const cleanRestName = encodeURIComponent(name);
             const cleanSubtitle = encodeURIComponent(subtitle);
             const cleanPhone = encodeURIComponent(phone);
             
-            lastGeneratedUrl = `${baseUrl}?rest=${cleanRestName}&phone=${cleanPhone}&sub=${cleanSubtitle}`;
+            lastGeneratedUrl = OFFICIAL_STORE_URL + `?rest=${cleanRestName}&phone=${cleanPhone}&sub=${cleanSubtitle}`;
 
             const qrBox = document.getElementById('qrcodeBox');
             qrBox.innerHTML = '';
